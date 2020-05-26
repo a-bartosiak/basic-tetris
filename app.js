@@ -8,11 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerId;
     let score = 0;
     const colors = [
-        'red',
-        'orange',
-        'blue',
-        'purple',
-        'green'
+        '#1f306e',
+        '#553772',
+        '#8f3b76',
+        '#c7417b',
+        '#f5487f'
     ];
 
     //The Tetrominoes
@@ -99,12 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    document.addEventListener('keyup', control);
+    //speed up
+    document.addEventListener('keydown', control);
 
     //move down function
     function moveDown() {
         undraw();
-        currentPosition += width;
+        currentPosition = currentPosition += width;
         draw();
         freeze();
     }
@@ -112,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //freeze function
     function freeze() {
         if (current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
-            current.forEach(index => squares[currentPosition + index].classList.add('taken'))
+            current.forEach(index => squares[currentPosition + index].classList.add('taken'));
             //start a new tetromino falling
             random = nextRandom;
             nextRandom = Math.floor(Math.random() * theTetrominoes.length);
@@ -128,14 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
     //move the tetromino left, unless is at the edge or there is a blockage
     function moveLeft() {
         undraw();
-        const isAtTheLeftEdge = current.some(index => (currentPosition + index) % width === 0)
-
+        const isAtTheLeftEdge = current.some(index => (currentPosition + index) % width === 0);
         if (!isAtTheLeftEdge) currentPosition -= 1;
-
         if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
             currentPosition += 1
         }
-
         draw();
     }
 
@@ -143,13 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveRight() {
         undraw();
         const isAtTheRightEdge = current.some(index => (currentPosition + index) % width === width - 1);
-
         if (!isAtTheRightEdge) currentPosition += 1;
-
         if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
             currentPosition -= 1
         }
-
         draw();
     }
 
