@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.querySelector('.grid');
+    const width = 10;
+    const height = 20;
+    const gridSize = width * height;
+
+    const grid = createGrid();
     let squares = Array.from(document.querySelectorAll('.grid div'));
     const scoreDisplay = document.querySelector('#score');
     const startBtn = document.querySelector('#start-button');
-    const width = 10;
     let nextRandom = 0;
     let timerId;
     let score = 0;
@@ -14,6 +17,31 @@ document.addEventListener('DOMContentLoaded', () => {
         '#c7417b',
         '#f5487f'
     ];
+
+    function createGrid() {
+        // the main grid
+        let grid = document.querySelector(".grid");
+        for (let i = 0; i < gridSize; i++) {
+            let gridElement = document.createElement("div");
+            grid.appendChild(gridElement)
+        }
+
+        // set base of grid
+        for (let i = 0; i < width; i++) {
+            let gridElement = document.createElement("div");
+            gridElement.setAttribute("class", "taken");
+            grid.appendChild(gridElement)
+        }
+
+        let previousGrid = document.querySelector(".mini-grid");
+        // Since 16 is the max grid size in which all the Tetrominoes
+        // can fit in we create one here
+        for (let i = 0; i < 16; i++) {
+            let gridElement = document.createElement("div");
+            previousGrid.appendChild(gridElement);
+        }
+        return grid;
+    }
 
     //The Tetrominoes
 
@@ -225,7 +253,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function gameOver() {
         if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
             scoreDisplay.innerHTML = 'end';
-            clearInterval(timerId)
+            clearInterval(timerId);
+            document.removeEventListener('keydown', control);
         }
     }
 });
