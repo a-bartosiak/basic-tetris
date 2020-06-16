@@ -11,11 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerId;
     let score = 0;
     const colors = [
-        '#1f306e',
-        '#553772',
-        '#8f3b76',
-        '#c7417b',
-        '#f5487f'
+        '#6a040f',
+        '#9d0208',
+        '#d00000',
+        '#dc2f02',
+        '#e85d04',
+        '#f48c06',
+        '#faa307'
     ];
 
     function createGrid() {
@@ -52,11 +54,25 @@ document.addEventListener('DOMContentLoaded', () => {
         [width, width * 2, width * 2 + 1, width * 2 + 2]
     ];
 
+    const lTurnedTetromino = [
+        [0, width, width * 2, width * 2 + 1],
+        [width, width + 1, width + 2, 2],
+        [0, 1, width + 1, width * 2 + 1],
+        [0, 1 , 2, width]
+    ];
+
     const zTetromino = [
         [width + 1, width + 2, width * 2, width * 2 + 1],
         [0, width, width + 1, width * 2 + 1],
         [width + 1, width + 2, width * 2, width * 2 + 1],
         [0, width, width + 1, width * 2 + 1]
+    ];
+
+    const zTurnedTetromino = [
+        [0, 1, width + 1, width + 2],
+        [1, width, width + 1, 2 * width],
+        [0, 1, width + 1, width + 2],
+        [1, width, width + 1, 2 * width]
     ];
 
     const tTetromino = [
@@ -80,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [width, width + 1, width + 2, width + 3]
     ];
 
-    const theTetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino];
+    const theTetrominoes = [lTetromino, lTurnedTetromino, zTetromino, zTurnedTetromino, tTetromino, oTetromino, iTetromino];
 
     let currentPosition = 4;
     let currentRotation = 0;
@@ -195,8 +211,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //the Tetrominos without rotations
     const upNextTetrominoes = [
-        [1, displayWidth + 1, displayWidth * 2 + 1, 2], //lTerminoe
-        [0, displayWidth, displayWidth + 1, , displayWidth * 2 + 1], //zTetromino
+
+        [1, displayWidth + 1, displayWidth * 2 + 1, 2], //lTetromino
+        [0, displayWidth, displayWidth * 2, displayWidth * 2 + 1], //lTurnedTetromino
+        [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], //zTetromino
+        [0, 1, displayWidth + 1, displayWidth + 2], //zTurnedTetromino
         [1, displayWidth, displayWidth + 1, displayWidth + 2], //tTetromino
         [0, 1, displayWidth, displayWidth + 1], //oTetromino
         [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1]
